@@ -1,0 +1,9 @@
+learn Python
+todo read kindle books
+deadline CS2103T reading /by every Fri
+event have dinner /from 5pm /to 7pm
+mark 2
+list
+unmark 2
+list
+bye

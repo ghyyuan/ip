@@ -15,7 +15,7 @@ public class Memo {
             System.out.println("____________________________________________________________");
             switch (inputs[0]) {
                 case "list":
-                    System.out.println("Here are the tasks in your list: ");
+                    System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < list.size(); i++) {
                         System.out.println((i + 1) + ". " + list.get(i).toString());
                     }
@@ -42,7 +42,7 @@ public class Memo {
                 case "todo":
                     ToDo td = new ToDo(inputs[1]);
                     list.add(td);
-                    System.out.printf("Got it. I've added this task: %s. Now you have %d tasks in the list", td.toString(), list.size());
+                    System.out.printf("Got it. I've added this task:\n%s\nNow you have %d tasks in the list\n", td.toString(), list.size());
                     // print format
                     break;
 
@@ -50,14 +50,14 @@ public class Memo {
                     String[] ddl = inputs[1].split(" /");
                     Deadline d = new Deadline(ddl[0], ddl[1].substring(3));
                     list.add(d);
-                    System.out.printf("Got it. I've added this task: %s.\n Now you have %d tasks in the list\n", d.toString(), list.size());
+                    System.out.printf("Got it. I've added this task:\n%s\nNow you have %d tasks in the list\n", d.toString(), list.size());
                     break;
 
                 case "event":
                     String[] tm = inputs[1].split(" /");
                     Event e = new Event(tm[0], tm[1].substring(5), tm[2].substring(3));
                     list.add(e);
-                    System.out.printf("Got it. I've added this task: %s.\n Now you have %d tasks in the list\n", e.toString(), list.size());
+                    System.out.printf("Got it. I've added this task:\n%s\nNow you have %d tasks in the list\n", e.toString(), list.size());
                     break;
 
                 default:
