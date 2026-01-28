@@ -27,7 +27,13 @@ public class UI {
 
     public void showList(List<Task> tasks) {
         showLine();
-        System.out.println("Here are the tasks in your list:");
+        if (tasks.isEmpty()) {
+            System.out.println("There are no tasks in the list");
+        } else if (tasks.size() == 1) {
+            System.out.println("Here are the task in the list:");
+        } else {
+            System.out.println("Here are the tasks in your list:");
+        }
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.get(i).toString());
         }
@@ -35,11 +41,17 @@ public class UI {
     }
 
     public void showMarkStatus(Task task, boolean isDone) {
+        showLine();
         if (isDone) {
             System.out.println("Nice! I've marked this task as done:");
         } else {
             System.out.println("OK, I've marked this task as not done yet:");
         }
-        System.out.println("  " + task);
+        System.out.println(task.toString());
+        showLine();
+    }
+
+    public void showError(String error) {
+        System.out.println(error);
     }
 }

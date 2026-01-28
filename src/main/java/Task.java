@@ -16,7 +16,7 @@ public class Task  {
         return String.format("[%s] %s", getStatus(), description);
     }
 
-    public void changeStatus() {
-        isDone = !isDone;
+    public void changeStatus(boolean isDone) {
+        this.isDone = isDone;
     }
 }

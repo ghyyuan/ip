@@ -3,72 +3,92 @@ import java.util.*;
 public class Memo {
     public static void main(String[] args) {
         List<Task> list = new ArrayList<>();
-
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Memo\nWhat can I do for you?");
-        System.out.println("____________________________________________________________");
-
+        UI ui = new UI();
         Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        while (!input.equals("bye")) {
+
+        ui.showWelcome();
+
+        while (true) {
+            String input = sc.nextLine().trim();
+
             String[] inputs = input.split(" ", 2);
-            System.out.println("____________________________________________________________");
-            switch (inputs[0]) {
-                case "list":
-                    System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < list.size(); i++) {
-                        System.out.println((i + 1) + ". " + list.get(i).toString());
-                    }
-                    break;
+            Command cmd = Command.fromString(inputs[0]);
 
-                case "mark":
-                    int num = Integer.parseInt(inputs[1]) - 1;
-                    if (num >= 0 && num < list.size()) {
-                        list.get(num).changeStatus();
-                        System.out.println("Nice! I've marked this task as done:");
-                        System.out.println(list.get(Integer.parseInt(inputs[1]) - 1).toString());
-                    }
+            try {
+                if (cmd == Command.BYE) {
+                    ui.showBye();
                     break;
+                }
 
-                case "unmark":
-                    int ind = Integer.parseInt(inputs[1]) - 1;
-                    if (ind >= 0 && ind < list.size()) {
-                        list.get(ind).changeStatus();
-                        System.out.println("OK, I've marked this task as not done yet:");
-                        System.out.println(list.get(Integer.parseInt(inputs[1]) - 1).toString());
-                    }
-                    break;
+                switch (cmd) {
+                    case LIST:
+                        ui.showList(list);
+                        break;
 
-                case "todo":
-                    ToDo td = new ToDo(inputs[1]);
-                    list.add(td);
-                    System.out.printf("Got it. I've added this task:\n%s\nNow you have %d tasks in the list\n", td.toString(), list.size());
-                    // print format
-                    break;
+                    case MARK:
+                    case UNMARK:
+                        if (inputs.length != 2) {
+                            throw new MemoException("Command is not complete ><");
+                        }
+                        // check length BEFORE parsing
+                        int index = Integer.parseInt(inputs[1]) - 1;
+                        if (!(index >= 0 && index < list.size())) {
+                            throw new MemoException("Please enter a valid index within the list :O");
+                        }
 
-                case "deadline":
-                    String[] ddl = inputs[1].split(" /");
-                    Deadline d = new Deadline(ddl[0], ddl[1].substring(3));
-                    list.add(d);
-                    System.out.printf("Got it. I've added this task:\n%s\nNow you have %d tasks in the list\n", d.toString(), list.size());
-                    break;
+                        boolean isDone = cmd == Command.MARK;
+                        list.get(index).changeStatus(isDone);
+                        ui.showMarkStatus(list.get(index), isDone);
+                        break;
 
-                case "event":
-                    String[] tm = inputs[1].split(" /");
-                    Event e = new Event(tm[0], tm[1].substring(5), tm[2].substring(3));
-                    list.add(e);
-                    System.out.printf("Got it. I've added this task:\n%s\nNow you have %d tasks in the list\n", e.toString(), list.size());
-                    break;
+                    case TODO:
+                        if (inputs.length != 2) {
+                            throw new MemoException("Please enter what you gonna do =(");
+                        }
+                        Task t = new ToDo(inputs[1]);
+                        list.add(t);
+                        ui.showAddedTask(t, list.size());
+                        break;
 
-                default:
-                list.add(new Task(input));
-                System.out.println("added: " + input);
+                    case DEADLINE:
+                        if (inputs.length != 2) {
+                            throw new MemoException("Please enter what you gonna do with time =(");
+                        }
+                        String[] ddl = inputs[1].split(" /by ");
+                        if (ddl.length != 2) {
+                            throw new MemoException("Please specify the ddl with /by :(");
+                        }
+                        Deadline d = new Deadline(ddl[0], ddl[1]);
+                        list.add(d);
+                        ui.showAddedTask(d, list.size());
+                        break;
+
+                    case EVENT:
+                        if (inputs.length != 2) {
+                            throw new MemoException("Please enter what you gonna do with time =(");
+                        }
+                        String[] str1 = inputs[1].split(" /from ");
+                        if (str1.length != 2) {
+                            throw new MemoException("Please specify the event with /from :(");
+                        }
+                        String[] str2 = str1[1].split(" /to ");
+                        if (str2.length != 2) {
+                            throw new MemoException("Please specify the event with /to:(");
+                        }
+                        Event e = new Event(str1[0], str2[0], str2[1]);
+                        list.add(e);
+                        ui.showAddedTask(e, list.size());
+                        break;
+
+                    case UNKNOWN:
+                        ui.showError("What does that mean ><");
+                        break;
+                }
+            } catch (MemoException e) {
+                ui.showError(e.getMessage());
+            } catch (NumberFormatException e) {
+                ui.showError("Please enter a valid number ><");
             }
-            System.out.println("____________________________________________________________");
-            input = sc.nextLine();
         }
-        System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
     }
 }
