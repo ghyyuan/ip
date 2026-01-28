@@ -41,6 +41,21 @@ public class Memo {
                         ui.showMarkStatus(list.get(index), isDone);
                         break;
 
+                    case DELETE:
+                        if (inputs.length != 2) {
+                            throw new MemoException("Command is not complete ><");
+                        }
+                        // check length BEFORE parsing
+                        int i = Integer.parseInt(inputs[1]) - 1;
+                        if (!(i >= 0 && i < list.size())) {
+                            throw new MemoException("Please enter a valid index within the list :O");
+                        }
+
+                        Task curr = list.get(i);
+                        list.remove(i);
+                        ui.showRemove(curr, list.size());
+                        break;
+
                     case TODO:
                         if (inputs.length != 2) {
                             throw new MemoException("Please enter what you gonna do =(");

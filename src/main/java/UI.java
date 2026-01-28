@@ -51,6 +51,12 @@ public class UI {
         showLine();
     }
 
+    public void showRemove(Task task, int total) {
+        showLine();
+        System.out.printf("Noted. I've removed this task:\n%s\nNow you have %d tasks in the list\n", task.toString(), total);
+        showLine();
+    }
+
     public void showError(String error) {
         System.out.println(error);
     }

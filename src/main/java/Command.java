@@ -1,7 +1,7 @@
 public enum Command {
     // define enum type by using enum keyword
     // constant names should be in uppercase letters
-    LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, BYE, UNKNOWN;
+    LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, BYE, UNKNOWN, DELETE;
 
     public static Command fromString(String s) {
         try {
