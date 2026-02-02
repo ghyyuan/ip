@@ -19,4 +19,8 @@ public class Task  {
     public void changeStatus(boolean isDone) {
         this.isDone = isDone;
     }
+
+    public String storeForm() {
+        return String.format("%d | %s", (isDone ? 1 : 0), description);
+    }
 }

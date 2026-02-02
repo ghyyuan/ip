@@ -11,4 +11,9 @@ public class Deadline extends Task {
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(), due);
     }
+
+    @Override
+    public String storeForm() {
+        return String.format("D | %s | %s", super.toString(), this.due);
+    }
 }
