@@ -7,6 +7,10 @@ public class UI {
         System.out.println(DIVIDER);
     }
 
+    public void showInitialization() {
+        System.out.println("Initializing...");
+    }
+
     public void showWelcome() {
         showLine();
         System.out.println("Hello! I'm Memo\nWhat can I do for you?");
