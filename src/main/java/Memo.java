@@ -10,7 +10,8 @@ public class Memo {
         List<Task> list = new ArrayList<>();
         UI ui = new UI();
 
-        File f = new File("../data/text.txt");
+        File f = new File("data/text.txt");
+        // System.out.println(f.getAbsolutePath());
 
         try {
             // if the parent directory doesn't exist
@@ -27,6 +28,13 @@ public class Memo {
             Scanner fileReader = new Scanner(f);
             while (fileReader.hasNextLine()) {
                 String line = fileReader.nextLine();
+                // System.out.println("DEBUG: Reading line [" + line + "] Length: " + line.length());
+                try {
+                    Task loadedTask = Parser.fromStoreForm(line);
+                    list.add(loadedTask);
+                } catch (MemoException e) {
+                    System.out.println("Skipping corrupted line...");
+                }
             }
 
         } catch (IOException e) {

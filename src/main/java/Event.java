@@ -16,6 +16,6 @@ public class Event extends Task {
 
     @Override
     public String storeForm() {
-        return String.format("E | %s | %s | %s", super.toString(), this.from, this.to);
+        return String.format("E | %s | %s | %s", super.storeForm(), this.from, this.to);
     }
 }

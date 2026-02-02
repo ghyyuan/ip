@@ -14,6 +14,6 @@ public class Deadline extends Task {
 
     @Override
     public String storeForm() {
-        return String.format("D | %s | %s", super.toString(), this.due);
+        return String.format("D | %s | %s", super.storeForm(), this.due);
     }
 }

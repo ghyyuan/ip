@@ -11,6 +11,6 @@ public class ToDo extends Task {
 
     @Override
     public String storeForm() {
-        return String.format("T | %s", super.toString());
+        return String.format("T | %s", super.storeForm());
     }
 }
