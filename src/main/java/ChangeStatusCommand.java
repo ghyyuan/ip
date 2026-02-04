@@ -9,10 +9,10 @@ public class ChangeStatusCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
-        tasks.validateIndex(index); //
+        tasks.validateIndex(index);
         Task task = tasks.getTask(index);
-        task.changeStatus(isDone); //
-        ui.showMarkStatus(task, isDone); //
+        task.changeStatus(isDone);
+        ui.showMarkStatus(task, isDone);
         storage.save(tasks);
     }
 }

@@ -7,8 +7,8 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
-        Task removed = tasks.deleteTask(index); //
-        ui.showRemove(removed, tasks.getSize()); //
-        storage.save(tasks); //
+        Task removed = tasks.deleteTask(index);
+        ui.showRemove(removed, tasks.getSize());
+        storage.save(tasks);
     }
 }

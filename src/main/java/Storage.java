@@ -50,8 +50,8 @@ public class Storage {
     public void save(TaskList tl) throws MemoException {
         try (FileWriter fw = new FileWriter(file)) {
             for (int i = 0; i < tl.getSize(); i++) {
-                Task t = tl.getTask(i);              
-                fw.write(t.storeForm() + "\n");
+                Task t = tl.getTask(i);
+                fw.write(t.toStoreForm() + "\n");
             }
         } catch (IOException e) {
             throw new MemoException("Could not save tasks to storage! :O");

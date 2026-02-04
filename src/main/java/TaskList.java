@@ -27,7 +27,7 @@ public class TaskList {
 
     public void validateIndex(int index) throws MemoException {
         if (index < 0 || index >= tasks.size()) {
-            throw new MemoException("Task number is out of range! :O");
+            throw new MemoException("Please enter a valid index within the list :O");
         }
     }
 
