@@ -1,6 +1,6 @@
 todo read kindle books
-deadline CS2103T reading /by every Fri
-event have dinner /from 5pm /to 7pm
+deadline CS2103T reading /by 2016-12-01
+event have dinner /from 2222-12-05 /to 2011-11-23
 mark 1
 list
 unmark 1

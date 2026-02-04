@@ -20,7 +20,7 @@ public class Task  {
         this.isDone = isDone;
     }
 
-    public String storeForm() {
+    public String toStoreForm() {
         return String.format("%d | %s", (isDone ? 1 : 0), description);
     }
 }

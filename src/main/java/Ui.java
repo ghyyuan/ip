@@ -1,7 +1,17 @@
-import java.util.List;
+import java.util.Scanner;
 
-public class UI {
+public class Ui {
     private static final String DIVIDER = "____________________________________________________________";
+
+    private Scanner scanner;
+
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public String readCommand() {
+        return scanner.nextLine().trim();
+    }
 
     public void showLine() {
         System.out.println(DIVIDER);
@@ -29,17 +39,17 @@ public class UI {
         showLine();
     }
 
-    public void showList(List<Task> tasks) {
+    public void showList(TaskList tasks) {
         showLine();
-        if (tasks.isEmpty()) {
-            System.out.println("There are no tasks in the list");
-        } else if (tasks.size() == 1) {
+        if (tasks.getSize() == 0) {
+            System.out.println("There is no task in the list");
+        } else if (tasks.getSize() == 1) {
             System.out.println("Here are the task in the list:");
         } else {
             System.out.println("Here are the tasks in your list:");
         }
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i).toString());
+        for (int i = 0; i < tasks.getSize(); i++) {
+            System.out.println((i + 1) + ". " + tasks.getTask(i).toString());
         }
         showLine();
     }
@@ -63,5 +73,9 @@ public class UI {
 
     public void showError(String error) {
         System.out.println(error);
+    }
+
+    public void showCorruptedError() {
+        System.out.println("Skipping corrupted lines...><");
     }
 }

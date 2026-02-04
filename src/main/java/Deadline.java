@@ -1,4 +1,3 @@
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -22,8 +21,8 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String storeForm() {
-        return String.format("D | %s | %s", super.storeForm(),
+    public String toStoreForm() {
+        return String.format("D | %s | %s", super.toStoreForm(),
                 this.due);
     }
 }
