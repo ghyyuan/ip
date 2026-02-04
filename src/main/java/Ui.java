@@ -1,8 +1,18 @@
 import java.util.List;
+import java.util.Scanner;
 
-public class UI {
+public class Ui {
     private static final String DIVIDER = "____________________________________________________________";
 
+    private Scanner scanner; // Ui 持有 ears (Scanner)
+
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public String readCommand() {
+        return scanner.nextLine().trim();
+    }
     public void showLine() {
         System.out.println(DIVIDER);
     }
@@ -63,5 +73,9 @@ public class UI {
 
     public void showError(String error) {
         System.out.println(error);
+    }
+
+    public void showCorruptedError() {
+        System.out.println("Skipping corrupted lines...><");
     }
 }
