@@ -1,3 +1,8 @@
+package memo.ui;
+
+import memo.tasks.Task;
+import memo.tasks.TaskList;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -18,7 +23,7 @@ public class Ui {
     }
 
     public void showInitialization() {
-        System.out.println("Initializing...");
+        System.out.println("Initializing...Welcome to Memo ^^");
     }
 
     public void showWelcome() {
@@ -73,9 +78,5 @@ public class Ui {
 
     public void showError(String error) {
         System.out.println(error);
-    }
-
-    public void showCorruptedError() {
-        System.out.println("Skipping corrupted lines...><");
     }
 }

@@ -1,3 +1,11 @@
+package memo.commands;
+
+import memo.exceptions.MemoException;
+import memo.storage.Storage;
+import memo.tasks.Task;
+import memo.tasks.TaskList;
+import memo.ui.Ui;
+
 public abstract class AddCommand extends Command {
 
     @Override
@@ -9,5 +17,5 @@ public abstract class AddCommand extends Command {
         storage.save(tasks);
     }
 
-    public abstract Task createTask() throws MemoException;
+    protected abstract Task createTask() throws MemoException;
 }

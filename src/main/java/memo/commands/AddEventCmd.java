@@ -1,3 +1,9 @@
+package memo.commands;
+
+import memo.exceptions.MemoException;
+import memo.tasks.Event;
+import memo.tasks.Task;
+
 public class AddEventCmd extends AddCommand {
     private String desc, from, to;
 
@@ -8,7 +14,7 @@ public class AddEventCmd extends AddCommand {
     }
 
     @Override
-    public Task createTask() throws MemoException {
+    protected Task createTask() throws MemoException {
         return new Event(desc, from, to);
     }
 }

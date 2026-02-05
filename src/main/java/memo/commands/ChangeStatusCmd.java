@@ -1,8 +1,16 @@
-public class ChangeStatusCommand extends Command {
+package memo.commands;
+
+import memo.storage.Storage;
+import memo.tasks.Task;
+import memo.tasks.TaskList;
+import memo.ui.Ui;
+import memo.exceptions.MemoException;
+
+public class ChangeStatusCmd extends Command {
     private int index;
     private boolean isDone;
 
-    public ChangeStatusCommand(int index, boolean isDone) {
+    public ChangeStatusCmd(int index, boolean isDone) {
         this.index = index;
         this.isDone = isDone;
     }

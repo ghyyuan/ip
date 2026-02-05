@@ -1,3 +1,7 @@
+package memo.tasks;
+
+import memo.exceptions.MemoException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
