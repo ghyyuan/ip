@@ -1,8 +1,15 @@
+package memo.storage;
+
+import memo.exceptions.MemoException;
+import memo.parser.Parser;
+import memo.tasks.Task;
+import memo.tasks.TaskList;
+import memo.ui.Ui;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Storage {
@@ -38,7 +45,7 @@ public class Storage {
                 try {
                     tasks.add(Parser.fromStoreForm(line));
                 } catch (MemoException e) {
-                    ui.showCorruptedError();
+                    ui.showError(e.getMessage());
                 }
             }
         } catch (IOException e) {

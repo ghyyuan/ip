@@ -1,3 +1,12 @@
+package memo.parser;
+
+import memo.commands.*;
+import memo.exceptions.MemoException;
+import memo.tasks.Deadline;
+import memo.tasks.Event;
+import memo.tasks.Task;
+import memo.tasks.ToDo;
+
 public class Parser {
 
     // This method transforms the stored line into a Task Object
@@ -58,8 +67,8 @@ public class Parser {
                 }
 
                 case DELETE -> new DeleteCommand(Integer.parseInt(inputs[1]) - 1);
-                case MARK -> new ChangeStatusCommand(Integer.parseInt(inputs[1]) - 1, true);
-                case UNMARK -> new ChangeStatusCommand(Integer.parseInt(inputs[1]) - 1, false);
+                case MARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, true);
+                case UNMARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, false);
                 case BYE -> new ExitCommand();
                 case UNKNOWN -> throw new MemoException("I don't know what that means ><");
             };

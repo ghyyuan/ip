@@ -1,3 +1,5 @@
+package memo.commands;
+
 public enum CommandType {
     // define enum type by using enum keyword
     // constant names should be in uppercase letters

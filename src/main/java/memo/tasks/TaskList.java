@@ -1,3 +1,7 @@
+package memo.tasks;
+
+import memo.exceptions.MemoException;
+
 import java.util.ArrayList;
 import java.util.List;
 
