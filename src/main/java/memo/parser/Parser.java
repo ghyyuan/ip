@@ -37,7 +37,7 @@ public class Parser {
         String[] inputs = fullCmd.split(" ", 2);
         CommandType type = CommandType.fromString(inputs[0]);
 
-        if (type != CommandType.LIST && type != CommandType.BYE && inputs.length < 2) {
+        if (type != CommandType.LIST && type != CommandType.BYE && type != CommandType.UNKNOWN && inputs.length < 2) {
             throw new MemoException("The description of a " + type + " cannot be empty! =(");
         }
 
@@ -70,6 +70,7 @@ public class Parser {
                 case MARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, true);
                 case UNMARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, false);
                 case BYE -> new ExitCommand();
+                case FIND -> new FindCmd(inputs[1]);
                 case UNKNOWN -> throw new MemoException("I don't know what that means ><");
             };
         } catch (NumberFormatException e) {
