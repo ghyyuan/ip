@@ -4,7 +4,7 @@ import memo.storage.Storage;
 import memo.tasks.TaskList;
 import memo.ui.Ui;
 
-public class ExitCommand extends Command {
+public class ExitCmd extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.showBye();

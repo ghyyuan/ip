@@ -4,7 +4,7 @@ import memo.exceptions.MemoException;
 import memo.tasks.Deadline;
 import memo.tasks.Task;
 
-public class AddDeadlineCmd extends AddCommand {
+public class AddDeadlineCmd extends AddCmd {
     private String desc;
     private String by;
 

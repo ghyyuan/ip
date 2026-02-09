@@ -6,16 +6,17 @@ import memo.tasks.Task;
 import memo.tasks.TaskList;
 import memo.ui.Ui;
 
-public abstract class AddCommand extends Command {
+public class DeleteCmd extends Command {
+    private int index;
+
+    public DeleteCmd(int index) {
+        this.index = index;
+    }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
-        Task t = createTask();
-
-        tasks.addTask(t);
-        ui.showAddedTask(t, tasks.getSize());
+        Task removed = tasks.deleteTask(index);
+        ui.showRemove(removed, tasks.getSize());
         storage.save(tasks);
     }
-
-    protected abstract Task createTask() throws MemoException;
 }

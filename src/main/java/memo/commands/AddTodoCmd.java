@@ -3,7 +3,7 @@ package memo.commands;
 import memo.tasks.Task;
 import memo.tasks.ToDo;
 
-public class AddTodoCmd extends AddCommand {
+public class AddTodoCmd extends AddCmd {
     private String desc;
 
     public AddTodoCmd(String desc) {
