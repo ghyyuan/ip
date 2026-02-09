@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles the loading and saving of tasks to a file on the hard disk.
+ */
+
 public class Storage {
 
     protected File file;
@@ -20,6 +24,14 @@ public class Storage {
         this.file = new File(filePath);
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * If the file or directory does not exist, they will be created.
+     *
+     * @param ui The Ui instance to display errors if corrupted lines are found.
+     * @return An ArrayList of tasks loaded from the file.
+     * @throws MemoException If an I/O error occurs while reading or creating the file.
+     */
     public ArrayList<Task> load(Ui ui) throws MemoException {
         // System.out.println(f.getAbsolutePath());
         ArrayList<Task> tasks = new ArrayList<>();
@@ -54,6 +66,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the current list of tasks to the storage file.
+     *
+     * @param tl The TaskList containing the tasks to be saved.
+     * @throws MemoException If an I/O error occurs while writing to the file.
+     */
     public void save(TaskList tl) throws MemoException {
         try (FileWriter fw = new FileWriter(file)) {
             for (int i = 0; i < tl.getSize(); i++) {
