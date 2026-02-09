@@ -4,7 +4,7 @@ import memo.exceptions.MemoException;
 import memo.tasks.Event;
 import memo.tasks.Task;
 
-public class AddEventCmd extends AddCommand {
+public class AddEventCmd extends AddCmd {
     private String desc, from, to;
 
     public AddEventCmd(String desc, String from, String to) {

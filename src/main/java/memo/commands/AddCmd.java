@@ -10,7 +10,7 @@ import memo.ui.Ui;
  * Represents a command to add a new task to the list.
  */
 
-public abstract class AddCommand extends Command {
+public abstract class AddCmd extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {

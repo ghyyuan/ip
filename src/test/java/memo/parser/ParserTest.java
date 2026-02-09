@@ -1,7 +1,7 @@
 package memo.parser;
 
 import memo.commands.Command;
-import memo.commands.ExitCommand;
+import memo.commands.ExitCmd;
 import memo.exceptions.MemoException;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +31,7 @@ public class ParserTest {
     public void parse_byeCommand_success() throws MemoException {
         Command c = Parser.parse("bye");
 
-        assertInstanceOf(ExitCommand.class, c);
+        assertInstanceOf(ExitCmd.class, c);
     }
 
     @Test

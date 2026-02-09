@@ -58,7 +58,7 @@ public class Parser {
 
         try {
             return switch (type) {
-                case LIST -> new ListCommand();
+                case LIST -> new ListCmd();
                 case TODO -> new AddTodoCmd(inputs[1]);
 
                 case DEADLINE -> {
@@ -81,10 +81,10 @@ public class Parser {
                     yield new AddEventCmd(fromParts[0], toParts[0], toParts[1]);
                 }
 
-                case DELETE -> new DeleteCommand(Integer.parseInt(inputs[1]) - 1);
+                case DELETE -> new DeleteCmd(Integer.parseInt(inputs[1]) - 1);
                 case MARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, true);
                 case UNMARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, false);
-                case BYE -> new ExitCommand();
+                case BYE -> new ExitCmd();
                 case UNKNOWN -> throw new MemoException("I don't know what that means ><");
             };
         } catch (NumberFormatException e) {

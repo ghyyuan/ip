@@ -6,10 +6,10 @@ import memo.tasks.Task;
 import memo.tasks.TaskList;
 import memo.ui.Ui;
 
-public class DeleteCommand extends Command {
+public class DeleteCmd extends Command {
     private int index;
 
-    public DeleteCommand(int index) {
+    public DeleteCmd(int index) {
         this.index = index;
     }
 
