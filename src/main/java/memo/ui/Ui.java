@@ -93,6 +93,21 @@ public class Ui {
         showLine();
     }
 
+    public void showMatched(TaskList tasks) {
+        showLine();
+        if (tasks.getSize() == 0) {
+            System.out.println("There is no matched task in the list");
+        } else if (tasks.getSize() == 1) {
+            System.out.println("Here are the matched task in the list:");
+        } else {
+            System.out.println("Here are the matched tasks in your list:");
+        }
+        for (int i = 0; i < tasks.getSize(); i++) {
+            System.out.println((i + 1) + ". " + tasks.getTask(i).toString());
+        }
+        showLine();
+    }
+
     public void showError(String error) {
         System.out.println(error);
     }
