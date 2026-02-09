@@ -5,6 +5,10 @@ import memo.tasks.TaskList;
 
 import java.util.Scanner;
 
+/**
+ * Handles all user interactions, including reading input and displaying messages.
+ */
+
 public class Ui {
     private static final String DIVIDER = "____________________________________________________________";
 
@@ -14,6 +18,11 @@ public class Ui {
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Reads a command line from the standard input.
+     *
+     * @return The user's input command with leading and trailing whitespace removed.
+     */
     public String readCommand() {
         return scanner.nextLine().trim();
     }
@@ -26,6 +35,9 @@ public class Ui {
         System.out.println("Initializing...Welcome to Memo ^^");
     }
 
+    /**
+     * Displays the welcome message to the user.
+     */
     public void showWelcome() {
         showLine();
         System.out.println("Hello! I'm Memo\nWhat can I do for you?");
@@ -44,6 +56,11 @@ public class Ui {
         showLine();
     }
 
+    /**
+     * Displays the tasks in the given task list.
+     *
+     * @param tasks The TaskList containing tasks to display.
+     */
     public void showList(TaskList tasks) {
         showLine();
         if (tasks.getSize() == 0) {

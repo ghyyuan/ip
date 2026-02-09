@@ -7,9 +7,18 @@ import memo.tasks.Event;
 import memo.tasks.Task;
 import memo.tasks.ToDo;
 
+/**
+ * Parses user input and file content into executable commands and task objects.
+ */
 public class Parser {
 
-    // This method transforms the stored line into a Task Object
+    /**
+     * Converts a line from the storage file into a Task object.
+     *
+     * @param line A single line of text from the storage file.
+     * @return The Task object represented by the file line.
+     * @throws MemoException If the line format is corrupted or the task type is unknown.
+     */
     public static Task fromStoreForm(String line) throws MemoException {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) {
@@ -32,7 +41,13 @@ public class Parser {
         return task;
     }
 
-    // This method parse a user command to specific action
+    /**
+     * Parses the full user command and returns the corresponding Command object.
+     *
+     * @param fullCmd The full command string entered by the user.
+     * @return A Command object corresponding to the user's input.
+     * @throws MemoException If the command is unknown, incomplete, or has invalid arguments.
+     */
     public static Command parse(String fullCmd) throws MemoException {
         String[] inputs = fullCmd.split(" ", 2);
         CommandType type = CommandType.fromString(inputs[0]);
