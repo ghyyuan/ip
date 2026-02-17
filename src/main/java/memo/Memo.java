@@ -58,11 +58,15 @@ public class Memo {
     }
 
     /**
-     * The entry point of the application.
-     *
-     * @param args Command line arguments (not used).
+     * Generates a response for the user's chat message.
      */
-    public static void main(String[] args) {
-        new Memo("data/text.txt").run();
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(tasks, ui, storage);
+
+        } catch (MemoException e) {
+            return ui.showError(e.getMessage());
+        }
     }
 }

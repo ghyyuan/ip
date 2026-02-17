@@ -19,7 +19,7 @@ public abstract class Command {
      * @param storage The storage to save changes if necessary.
      * @throws MemoException If an error occurs during execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws MemoException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws MemoException;
 
     /**
      * Checks if this command should exit the application.
