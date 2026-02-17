@@ -31,84 +31,85 @@ public class Ui {
         System.out.println(DIVIDER);
     }
 
-    public void showInitialization() {
-        System.out.println("Initializing...Welcome to Memo ^^");
+    public String showInitialization() {
+        return "Initializing...Welcome to Memo ^^";
     }
 
     /**
-     * Displays the welcome message to the user.
+     * Generates the welcome message for the user.
+     *
+     * @return The welcome message string.
      */
-    public void showWelcome() {
-        showLine();
-        System.out.println("Hello! I'm Memo\nWhat can I do for you?");
-        showLine();
+    public String showWelcome() {
+        return "Hello! I'm Memo\nWhat can I do for you?";
     }
 
-    public void showBye() {
-        showLine();
-        System.out.println("Bye. Hope to see you again soon!");
-        showLine();
+    public String showBye() {
+        return "Bye. Hope to see you again soon!";
     }
 
-    public void showAddedTask(Task task, int total) {
-        showLine();
-        System.out.printf("Got it. I've added this task:\n%s\nNow you have %d tasks in the list\n", task, total);
-        showLine();
+    public String showAddedTask(Task task, int total) {
+        return String.format("Got it. I've added this task:\n%s\nNow you have %d tasks in the list",
+                task.toString(), total);
     }
 
     /**
-     * Displays the tasks in the given task list.
+     * Generates a formatted string of all tasks in the given task list.
      *
      * @param tasks The TaskList containing tasks to display.
+     * @return A string representation of the tasks.
      */
-    public void showList(TaskList tasks) {
-        showLine();
+    public String showList(TaskList tasks) {
         if (tasks.getSize() == 0) {
-            System.out.println("There is no task in the list");
-        } else if (tasks.getSize() == 1) {
-            System.out.println("Here are the task in the list:");
+            return "There is no task in the list";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if (tasks.getSize() == 1) {
+            sb.append("Here is the task in the list:\n");
         } else {
-            System.out.println("Here are the tasks in your list:");
+            sb.append("Here are the tasks in your list:\n");
         }
+
         for (int i = 0; i < tasks.getSize(); i++) {
-            System.out.println((i + 1) + ". " + tasks.getTask(i).toString());
+            sb.append(i + 1).append(". ").append(tasks.getTask(i).toString()).append("\n");
         }
-        showLine();
+
+        return sb.toString().trim();
     }
 
-    public void showMarkStatus(Task task, boolean isDone) {
-        showLine();
+    public String showMarkStatus(Task task, boolean isDone) {
         if (isDone) {
-            System.out.println("Nice! I've marked this task as done:");
+            return "Nice! I've marked this task as done:\n" + task.toString();
         } else {
-            System.out.println("OK, I've marked this task as not done yet:");
+            return "OK, I've marked this task as not done yet:\n" + task.toString();
         }
-        System.out.println(task.toString());
-        showLine();
     }
 
-    public void showRemove(Task task, int total) {
-        showLine();
-        System.out.printf("Noted. I've removed this task:\n%s\nNow you have %d tasks in the list\n", task.toString(), total);
-        showLine();
+    public String showRemove(Task task, int total) {
+        return String.format("Noted. I've removed this task:\n%s\nNow you have %d tasks in the list",
+                task.toString(), total);
     }
 
-    public void showMatched(TaskList tasks) {
-        showLine();
+    public String showMatched(TaskList tasks) {
         if (tasks.getSize() == 0) {
-            System.out.println("There is no matched task in the list");
-        } else if (tasks.getSize() == 1) {
-            System.out.println("Here are the matched task in the list:");
+            return "There is no matched task in the list";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        if (tasks.getSize() == 1) {
+            sb.append("Here is the matched task in the list:\n");
         } else {
-            System.out.println("Here are the matched tasks in your list:");
+            sb.append("Here are the matched tasks in your list:\n");
         }
+
         for (int i = 0; i < tasks.getSize(); i++) {
-            System.out.println((i + 1) + ". " + tasks.getTask(i).toString());
+            sb.append(i + 1).append(". ").append(tasks.getTask(i).toString()).append("\n");
         }
-        showLine();
+        return sb.toString().trim();
     }
 
-    public void showError(String error) {
-        System.out.println(error);
+    public String showError(String error) {
+        return error;
     }
 }

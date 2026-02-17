@@ -13,12 +13,12 @@ import memo.ui.Ui;
 public abstract class AddCmd extends Command {
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
         Task t = createTask();
 
         tasks.addTask(t);
-        ui.showAddedTask(t, tasks.getSize());
         storage.save(tasks);
+        return ui.showAddedTask(t, tasks.getSize());
     }
 
     /**

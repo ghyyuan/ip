@@ -16,11 +16,11 @@ public class ChangeStatusCmd extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
         tasks.validateIndex(index);
         Task task = tasks.getTask(index);
         task.changeStatus(isDone);
-        ui.showMarkStatus(task, isDone);
         storage.save(tasks);
+        return ui.showMarkStatus(task, isDone);
     }
 }
