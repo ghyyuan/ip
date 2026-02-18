@@ -21,6 +21,7 @@ public class Storage {
     protected File file;
 
     public Storage(String filePath) {
+        assert filePath != null && !filePath.trim().isEmpty() : "File path should not be null or empty";
         this.file = new File(filePath);
     }
 
@@ -33,7 +34,6 @@ public class Storage {
      * @throws MemoException If an I/O error occurs while reading or creating the file.
      */
     public ArrayList<Task> load(Ui ui) throws MemoException {
-        // System.out.println(f.getAbsolutePath());
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {

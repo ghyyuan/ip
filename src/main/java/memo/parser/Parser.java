@@ -54,7 +54,10 @@ public class Parser {
      * @throws MemoException If the command is unknown, incomplete, or has invalid arguments.
      */
     public static Command parse(String fullCmd) throws MemoException {
+        assert fullCmd != null : "Command string should not be null";
         String[] inputs = fullCmd.split(" ", 2);
+
+        assert inputs.length > 0 : "Parsed input array should not be empty";
         CommandType type = CommandType.fromString(inputs[0]);
 
         boolean isCmdNeedingArgs = (type != CommandType.LIST)

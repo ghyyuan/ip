@@ -47,6 +47,7 @@ public class TaskList {
      * @return The task at the specified index.
      */
     public Task getTask(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds in getTask";
         return tasks.get(index);
     }
 
