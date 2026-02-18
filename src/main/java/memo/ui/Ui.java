@@ -49,8 +49,10 @@ public class Ui {
     }
 
     public String showAddedTask(Task task, int total) {
+        assert task != null : "Task to be shown should not be null";
+        assert total > 0 : "Total tasks should be strictly positive after adding";
         return String.format("Got it. I've added this task:\n%s\nNow you have %d tasks in the list",
-                task.toString(), total);
+                task, total);
     }
 
     /**
