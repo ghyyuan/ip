@@ -38,6 +38,9 @@ public class MainWindow extends AnchorPane {
     /** Injects the Memo instance */
     public void setMemo(Memo memo) {
         this.memo = memo;
+        dialogContainer.getChildren().addAll(
+                DialogBox.getMemoDialog(memo.getGreeting(), memoImage)
+        );
     }
 
     /**
@@ -54,12 +57,9 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
 
-        if (input.trim().equalsIgnoreCase("bye")) {
+        if (memo.isExit()) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
-
             delay.setOnFinished(event -> Platform.exit());
-
-            // 启动计时器
             delay.play();
         }
     }

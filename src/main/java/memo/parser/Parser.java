@@ -12,6 +12,11 @@ import memo.tasks.ToDo;
  */
 public class Parser {
 
+    private static final String DELIMITER = " \\| ";
+    private static final String ARG_BY = " /by ";
+    private static final String ARG_FROM = " /from ";
+    private static final String ARG_TO = " /to ";
+
     /**
      * Converts a line from the storage file into a Task object.
      *
@@ -20,7 +25,7 @@ public class Parser {
      * @throws MemoException If the line format is corrupted or the task type is unknown.
      */
     public static Task fromStoreForm(String line) throws MemoException {
-        String[] parts = line.split(" \\| ");
+        String[] parts = line.split(DELIMITER);
         if (parts.length < 3) {
             throw new MemoException("Skipping corrupted file line TT");
         }
@@ -55,7 +60,11 @@ public class Parser {
         assert inputs.length > 0 : "Parsed input array should not be empty";
         CommandType type = CommandType.fromString(inputs[0]);
 
-        if (type != CommandType.LIST && type != CommandType.BYE && type != CommandType.UNKNOWN && inputs.length < 2) {
+        boolean isCmdNeedingArgs = (type != CommandType.LIST)
+                && (type != CommandType.BYE)
+                && (type != CommandType.UNKNOWN);
+
+        if (isCmdNeedingArgs && inputs.length < 2) {
             throw new MemoException("The description of a " + type + " cannot be empty! =(");
         }
 
@@ -63,27 +72,8 @@ public class Parser {
             return switch (type) {
                 case LIST -> new ListCmd();
                 case TODO -> new AddTodoCmd(inputs[1]);
-
-                case DEADLINE -> {
-                    String[] parts = inputs[1].split(" /by ");
-                    if (parts.length < 2) {
-                        throw new MemoException("Please specify the deadline with /by :(");
-                    }
-                    yield new AddDeadlineCmd(parts[0], parts[1]);
-                }
-
-                case EVENT -> {
-                    String[] fromParts = inputs[1].split(" /from ");
-                    if (fromParts.length < 2) {
-                        throw new MemoException("Please specify /from for your event :(");
-                    }
-                    String[] toParts = fromParts[1].split(" /to ");
-                    if (toParts.length < 2) {
-                        throw new MemoException("Please specify /to for your event :(");
-                    }
-                    yield new AddEventCmd(fromParts[0], toParts[0], toParts[1]);
-                }
-
+                case DEADLINE -> prepareDeadline(inputs[1]);
+                case EVENT -> prepareEvent(inputs[1]);
                 case DELETE -> new DeleteCmd(Integer.parseInt(inputs[1]) - 1);
                 case MARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, true);
                 case UNMARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, false);
@@ -94,5 +84,25 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new MemoException("Please put in number format ><");
         }
+    }
+
+    private static Command prepareDeadline(String args) throws MemoException {
+        String[] parts = args.split(" /by ");
+        if (parts.length < 2) {
+            throw new MemoException("Please specify the deadline with /by :(");
+        }
+        return new AddDeadlineCmd(parts[0], parts[1]);
+    }
+
+    private static Command prepareEvent(String args) throws MemoException {
+        String[] fromParts = args.split(ARG_FROM);
+        if (fromParts.length < 2) {
+            throw new MemoException("Please specify /from for your event :(");
+        }
+        String[] toParts = fromParts[1].split(ARG_TO);
+        if (toParts.length < 2) {
+            throw new MemoException("Please specify /to for your event :(");
+        }
+        return new AddEventCmd(fromParts[0], toParts[0], toParts[1]);
     }
 }

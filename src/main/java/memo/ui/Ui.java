@@ -10,27 +10,6 @@ import java.util.Scanner;
  */
 
 public class Ui {
-    private static final String DIVIDER = "____________________________________________________________";
-
-    private Scanner scanner;
-
-    public Ui() {
-        this.scanner = new Scanner(System.in);
-    }
-
-    /**
-     * Reads a command line from the standard input.
-     *
-     * @return The user's input command with leading and trailing whitespace removed.
-     */
-    public String readCommand() {
-        return scanner.nextLine().trim();
-    }
-
-    public void showLine() {
-        System.out.println(DIVIDER);
-    }
-
     public String showInitialization() {
         return "Initializing...Welcome to Memo ^^";
     }

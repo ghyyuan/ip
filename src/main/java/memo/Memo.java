@@ -17,6 +17,7 @@ public class Memo {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private boolean isExit = false;
 
     /**
      * Constructs a Memo instance with the specified file path for storage.
@@ -35,26 +36,8 @@ public class Memo {
         }
     }
 
-    /**
-     * Runs the main program loop.
-     * Handles user input, parses commands, executes them, and updates the UI until the exit command is received.
-     */
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-
-                Command c = Parser.parse(fullCommand);
-
-                c.execute(tasks, ui, storage);
-
-                isExit = c.isExit();
-            } catch (MemoException e) {
-                ui.showError(e.getMessage());
-            }
-        }
+    public String getGreeting() {
+        return ui.showWelcome();
     }
 
     /**
@@ -63,10 +46,14 @@ public class Memo {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
+            this.isExit = c.isExit();
             return c.execute(tasks, ui, storage);
-
         } catch (MemoException e) {
             return ui.showError(e.getMessage());
         }
+    }
+
+    public boolean isExit() {
+        return isExit;
     }
 }
