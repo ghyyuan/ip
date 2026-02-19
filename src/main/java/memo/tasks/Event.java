@@ -29,7 +29,7 @@ public class Event extends Task {
 
     @Override
     public String toStoreForm() {
-        return String.format("E | %s | %s | %s", super.toStoreForm(),
-                this.from, this.to);
+        return String.format("E | %s | %s | %s | %s", super.toStoreForm(),
+                this.from, this.to, String.join(",", tags));
     }
 }

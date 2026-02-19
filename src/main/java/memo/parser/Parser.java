@@ -40,6 +40,8 @@ public class Parser {
             default -> throw new MemoException("Unknown task type in file TT");
         };
 
+        restoreTags(task, parts);
+
         if (isDone) {
             task.changeStatus(true);
         }
@@ -79,6 +81,13 @@ public class Parser {
                 case UNMARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, false);
                 case BYE -> new ExitCmd();
                 case FIND -> new FindCmd(inputs[1]);
+                case TAG -> {
+                    String[] parts = inputs[1].split(" ", 2);
+                    if (parts.length < 2) {
+                        throw new MemoException("Please specify the task number and the tag! (e.g., tag 1 fun) ><");
+                    }
+                    yield new TagCmd(Integer.parseInt(parts[0]) - 1, parts[1]);
+                }
                 case UNKNOWN -> throw new MemoException("I don't know what that means ><");
             };
         } catch (NumberFormatException e) {
@@ -104,5 +113,26 @@ public class Parser {
             throw new MemoException("Please specify /to for your event :(");
         }
         return new AddEventCmd(fromParts[0], toParts[0], toParts[1]);
+    }
+
+    /**
+     * Helper method to restore tags from the storage file line.
+     */
+    private static void restoreTags(Task task, String[] parts) {
+        // 判断标签在数组中应该处于哪个索引位置
+        int tagIndex = switch (parts[0]) {
+            case "T" -> 3;
+            case "D" -> 4;
+            case "E" -> 5;
+            default -> -1;
+        };
+
+        // 如果存在标签字段且不为空，则切分并添加
+        if (tagIndex != -1 && parts.length > tagIndex && !parts[tagIndex].isEmpty()) {
+            String[] savedTags = parts[tagIndex].split(",");
+            for (String t : savedTags) {
+                task.addTag(t);
+            }
+        }
     }
 }
