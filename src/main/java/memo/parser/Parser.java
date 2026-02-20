@@ -6,6 +6,8 @@ import memo.tasks.Deadline;
 import memo.tasks.Event;
 import memo.tasks.Task;
 import memo.tasks.ToDo;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Parses user input and file content into executable commands and task objects.
@@ -73,7 +75,7 @@ public class Parser {
         try {
             return switch (type) {
                 case LIST -> new ListCmd();
-                case TODO -> new AddTodoCmd(inputs[1]);
+                case TODO -> prepareTodo(inputs[1]);
                 case DEADLINE -> prepareDeadline(inputs[1]);
                 case EVENT -> prepareEvent(inputs[1]);
                 case DELETE -> new DeleteCmd(Integer.parseInt(inputs[1]) - 1);
@@ -81,13 +83,7 @@ public class Parser {
                 case UNMARK -> new ChangeStatusCmd(Integer.parseInt(inputs[1]) - 1, false);
                 case BYE -> new ExitCmd();
                 case FIND -> new FindCmd(inputs[1]);
-                case TAG -> {
-                    String[] parts = inputs[1].split(" ", 2);
-                    if (parts.length < 2) {
-                        throw new MemoException("Please specify the task number and the tag! (e.g., tag 1 fun) ><");
-                    }
-                    yield new TagCmd(Integer.parseInt(parts[0]) - 1, parts[1]);
-                }
+                case TAG -> prepareTag(inputs[1]);
                 case UNKNOWN -> throw new MemoException("I don't know what that means ><");
             };
         } catch (NumberFormatException e) {
@@ -95,16 +91,27 @@ public class Parser {
         }
     }
 
+    private static Command prepareTodo(String args) {
+        ParsedInput parsed = extractTags(args);
+        AddTodoCmd cmd = new AddTodoCmd(parsed.cleanText());
+        cmd.setInlineTags(parsed.tags());
+        return cmd;
+    }
+
     private static Command prepareDeadline(String args) throws MemoException {
-        String[] parts = args.split(" /by ");
+        ParsedInput parsed = extractTags(args);
+        String[] parts = parsed.cleanText().split(ARG_BY);
         if (parts.length < 2) {
             throw new MemoException("Please specify the deadline with /by :(");
         }
-        return new AddDeadlineCmd(parts[0], parts[1]);
+        AddDeadlineCmd cmd = new AddDeadlineCmd(parts[0], parts[1]);
+        cmd.setInlineTags(parsed.tags());
+        return cmd;
     }
 
     private static Command prepareEvent(String args) throws MemoException {
-        String[] fromParts = args.split(ARG_FROM);
+        ParsedInput parsed = extractTags(args);
+        String[] fromParts = parsed.cleanText().split(ARG_FROM);
         if (fromParts.length < 2) {
             throw new MemoException("Please specify /from for your event :(");
         }
@@ -112,7 +119,17 @@ public class Parser {
         if (toParts.length < 2) {
             throw new MemoException("Please specify /to for your event :(");
         }
-        return new AddEventCmd(fromParts[0], toParts[0], toParts[1]);
+        AddEventCmd cmd = new AddEventCmd(fromParts[0], toParts[0], toParts[1]);
+        cmd.setInlineTags(parsed.tags());
+        return cmd;
+    }
+
+    private static Command prepareTag(String args) throws MemoException {
+        String[] parts = args.split(" ", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new MemoException("Please specify the task number and the tag! (e.g., tag 1 fun) ><");
+        }
+        return new TagCmd(Integer.parseInt(parts[0]) - 1, parts[1].trim());
     }
 
     /**
@@ -135,4 +152,22 @@ public class Parser {
             }
         }
     }
+
+    private static ParsedInput extractTags(String rawInput) {
+        List<String> tags = new ArrayList<>();
+        StringBuilder cleanedInput = new StringBuilder();
+
+        String[] words = rawInput.split(" ");
+        for (String word : words) {
+            if (word.startsWith("#") && word.length() > 1) {
+                tags.add(word.substring(1)); // 去掉 # 符号并保存
+            } else {
+                cleanedInput.append(word).append(" ");
+            }
+        }
+
+        return new ParsedInput(cleanedInput.toString().trim(), tags);
+    }
+
+    private record ParsedInput(String cleanText, List<String> tags) {}
 }
