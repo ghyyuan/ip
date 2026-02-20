@@ -93,4 +93,8 @@ public class Ui {
     public String showError(String error) {
         return error;
     }
+
+    public String showTagged(Task task) {
+        return "Got it! I've tagged this task:\n  " + task.toString();
+    }
 }

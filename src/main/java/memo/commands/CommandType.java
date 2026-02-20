@@ -1,7 +1,7 @@
 package memo.commands;
 
 public enum CommandType {
-    LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, BYE, UNKNOWN, DELETE, FIND;
+    LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, BYE, UNKNOWN, DELETE, FIND, TAG;
 
     /**
      * Parses a string to find the corresponding CommandType enum.

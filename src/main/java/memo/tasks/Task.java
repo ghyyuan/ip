@@ -1,5 +1,8 @@
 package memo.tasks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a generic task with a description and completion status.
  */
@@ -7,10 +10,25 @@ package memo.tasks;
 public class Task  {
     protected String description;
     protected boolean isDone;
+    protected List<String> tags;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.tags = new ArrayList<>();
+    }
+
+    public void addTag(String tag) {
+        this.tags.add(tag);
+    }
+
+    public String getTagsString() {
+        if (tags.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (String tag : tags) {
+            sb.append("#").append(tag).append(" ");
+        }
+        return sb.toString().trim();
     }
 
     public String getStatus() {
@@ -19,7 +37,8 @@ public class Task  {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s", getStatus(), description);
+        String tagsStr = getTagsString();
+        return String.format("[%s] %s %s", getStatus(), description, tagsStr);
     }
 
     public void changeStatus(boolean isDone) {

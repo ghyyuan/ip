@@ -6,15 +6,27 @@ import memo.tasks.Task;
 import memo.tasks.TaskList;
 import memo.ui.Ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a command to add a new task to the list.
  */
 
 public abstract class AddCmd extends Command {
 
+    private List<String> inlineTags = new ArrayList<>();
+
+    public void setInlineTags(List<String> tags) {
+        this.inlineTags = tags;
+    }
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
         Task t = createTask();
+
+        for (String tag : inlineTags) {
+            t.addTag(tag);
+        }
 
         tasks.addTask(t);
         storage.save(tasks);

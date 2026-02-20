@@ -13,6 +13,6 @@ public class ToDo extends Task {
 
     @Override
     public String toStoreForm() {
-        return String.format("T | %s", super.toStoreForm());
+        return String.format("T | %s | %s", super.toStoreForm(), String.join(",", tags));
     }
 }
