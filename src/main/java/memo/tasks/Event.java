@@ -4,6 +4,7 @@ import memo.exceptions.MemoException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
 
@@ -16,7 +17,10 @@ public class Event extends Task {
         try {
             this.from = LocalDate.parse(from);
             this.to = LocalDate.parse(to);
-        } catch (Exception e) {
+            if (this.to.isBefore(this.from)) {
+                throw new MemoException("woo...The end date cannot be earlier than the start date ><");
+            }
+        } catch (DateTimeParseException e) {
             throw new MemoException("Please enter in yyyy-mm-dd format :O");
         }
     }
