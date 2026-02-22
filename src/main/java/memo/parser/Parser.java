@@ -71,7 +71,8 @@ public class Parser {
 
         boolean isCmdNeedingArgs = (type != CommandType.LIST)
                 && (type != CommandType.BYE)
-                && (type != CommandType.UNKNOWN);
+                && (type != CommandType.UNKNOWN)
+                && (type != CommandType.HELP);
 
         if (isCmdNeedingArgs && inputs.length < 2) {
             throw new MemoException("The description of a " + type + " cannot be empty! =(");
@@ -89,6 +90,7 @@ public class Parser {
                 case BYE -> new ExitCmd();
                 case FIND -> new FindCmd(inputs[1]);
                 case TAG -> prepareTag(inputs[1]);
+                case HELP -> new HelpCmd();
                 case UNKNOWN -> throw new MemoException("I don't know what that means ><");
             };
         } catch (NumberFormatException e) {

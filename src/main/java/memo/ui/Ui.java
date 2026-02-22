@@ -112,4 +112,18 @@ public class Ui {
     public String showTagged(Task task) {
         return "Nice! I've tagged this task:\n  " + task.toString();
     }
+
+    public String showHelp() {
+        return "Here is the memo manual! ^O^\n"
+                + "1. todo <desc> [#tag]\n"
+                + "2. deadline <desc> /by <yyyy-mm-dd> [#tag]\n"
+                + "3. event <desc> /from <yyyy-mm-dd> /to <yyyy-mm-dd> [#tag]\n"
+                + "4. list - Show all tasks\n"
+                + "5. mark/unmark <index> - Change task status\n"
+                + "6. delete <index> - Remove a task\n"
+                + "7. find <keyword> - Search in your list\n"
+                + "8. tag <index> <tagname> - Add a tag\n"
+                + "9. help - Show this guide\n"
+                + "10. bye - See you again\n";
+    }
 }
