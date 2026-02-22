@@ -59,6 +59,10 @@ public class Parser {
      */
     public static Command parse(String fullCmd) throws MemoException {
         assert fullCmd != null : "Command string should not be null";
+
+        if (fullCmd.contains("|")) {
+            throw new MemoException("Please don't use the pipe character '|' in your input! ><");
+        }
         String[] inputs = fullCmd.split(" ", 2);
 
         assert inputs.length > 0 : "Parsed input array should not be empty";
@@ -91,10 +95,10 @@ public class Parser {
         }
     }
 
-    private static Command prepareTodo(String args) {
+    private static Command prepareTodo(String args) throws MemoException {
         ParsedInput parsed = extractTags(args);
         AddTodoCmd cmd = new AddTodoCmd(parsed.cleanText());
-        cmd.setInlineTags(parsed.tags());
+        cmd.setTags(parsed.tags());
         return cmd;
     }
 
@@ -102,10 +106,10 @@ public class Parser {
         ParsedInput parsed = extractTags(args);
         String[] parts = parsed.cleanText().split(ARG_BY);
         if (parts.length < 2) {
-            throw new MemoException("Please specify the deadline with /by :(");
+            throw new MemoException("Please specify the deadline with content and '/by' :(");
         }
         AddDeadlineCmd cmd = new AddDeadlineCmd(parts[0], parts[1]);
-        cmd.setInlineTags(parsed.tags());
+        cmd.setTags(parsed.tags());
         return cmd;
     }
 
@@ -113,14 +117,14 @@ public class Parser {
         ParsedInput parsed = extractTags(args);
         String[] fromParts = parsed.cleanText().split(ARG_FROM);
         if (fromParts.length < 2) {
-            throw new MemoException("Please specify /from for your event :(");
+            throw new MemoException("Please specify content + '/from' + time for your event :(");
         }
         String[] toParts = fromParts[1].split(ARG_TO);
         if (toParts.length < 2) {
-            throw new MemoException("Please specify /to for your event :(");
+            throw new MemoException("Please specify '/to' + time for your event :(");
         }
         AddEventCmd cmd = new AddEventCmd(fromParts[0], toParts[0], toParts[1]);
-        cmd.setInlineTags(parsed.tags());
+        cmd.setTags(parsed.tags());
         return cmd;
     }
 
@@ -133,10 +137,13 @@ public class Parser {
     }
 
     /**
-     * Helper method to restore tags from the storage file line.
+     * Restores tags to a task by extracting them from the parsed storage string array.
+     * Determines the correct index for tags based on the task type (T, D, E) and adds them to the task.
+     *
+     * @param task  The task to which the restored tags will be added.
+     * @param parts The array of strings parsed from a single line in the storage file.
      */
-    private static void restoreTags(Task task, String[] parts) {
-        // 判断标签在数组中应该处于哪个索引位置
+    private static void restoreTags(Task task, String[] parts) throws MemoException {
         int tagIndex = switch (parts[0]) {
             case "T" -> 3;
             case "D" -> 4;
@@ -144,7 +151,6 @@ public class Parser {
             default -> -1;
         };
 
-        // 如果存在标签字段且不为空，则切分并添加
         if (tagIndex != -1 && parts.length > tagIndex && !parts[tagIndex].isEmpty()) {
             String[] savedTags = parts[tagIndex].split(",");
             for (String t : savedTags) {
@@ -153,14 +159,19 @@ public class Parser {
         }
     }
 
-    private static ParsedInput extractTags(String rawInput) {
+    private static ParsedInput extractTags(String rawInput) throws MemoException {
         List<String> tags = new ArrayList<>();
         StringBuilder cleanedInput = new StringBuilder();
 
-        String[] words = rawInput.split(" ");
+        // 用 " +" 切分：不管打多少个空格，都当成一个空格处理，消灭幽灵空格
+        String[] words = rawInput.split(" +");
         for (String word : words) {
-            if (word.startsWith("#") && word.length() > 1) {
-                tags.add(word.substring(1)); // 去掉 # 符号并保存
+            if (word.startsWith("#")) {
+                // 抓到了！如果只有一个 '#'，说明没写标签内容
+                if (word.length() == 1) {
+                    throw new MemoException("Tag name cannot be empty! Please specify a tag after '#' ><");
+                }
+                tags.add(word.substring(1));
             } else {
                 cleanedInput.append(word).append(" ");
             }

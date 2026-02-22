@@ -1,5 +1,7 @@
 package memo.tasks;
 
+import memo.exceptions.MemoException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,21 @@ public class Task  {
         this.tags = new ArrayList<>();
     }
 
-    public void addTag(String tag) {
+    public void addTag(String tag) throws MemoException {
+        if (this.tags.contains(tag)) {
+            throw new MemoException("Tag " + tag + " already exists QaQ");
+        } else if (tag.trim().isEmpty()) {
+            throw new MemoException("Tag should not be empty QaQ");
+        }
         this.tags.add(tag);
     }
 
+    /**
+     * Retrieves the string representation of all tags associated with this task.
+     * Each tag is prefixed with a '#' symbol and separated by spaces.
+     *
+     * @return A string containing all formatted tags, or an empty string if there are no tags.
+     */
     public String getTagsString() {
         if (tags.isEmpty()) return "";
         StringBuilder sb = new StringBuilder();
@@ -37,8 +50,7 @@ public class Task  {
 
     @Override
     public String toString() {
-        String tagsStr = getTagsString();
-        return String.format("[%s] %s %s", getStatus(), description, tagsStr);
+        return String.format("[%s] %s", getStatus(), description);
     }
 
     public void changeStatus(boolean isDone) {

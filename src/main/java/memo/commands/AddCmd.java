@@ -15,16 +15,17 @@ import java.util.List;
 
 public abstract class AddCmd extends Command {
 
-    private List<String> inlineTags = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 
-    public void setInlineTags(List<String> tags) {
-        this.inlineTags = tags;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
+
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
         Task t = createTask();
 
-        for (String tag : inlineTags) {
+        for (String tag : tags) {
             t.addTag(tag);
         }
 

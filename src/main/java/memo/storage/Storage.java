@@ -45,7 +45,6 @@ public class Storage {
             // if the file doesn't exist
             if (!file.exists()) {
                 file.createNewFile();
-                ui.showInitialization();
                 return tasks;
             }
 
@@ -60,6 +59,8 @@ public class Storage {
                     ui.showError(e.getMessage());
                 }
             }
+
+            fileReader.close();
         } catch (IOException e) {
             throw new MemoException("I cannot read or create the file TT");
         }

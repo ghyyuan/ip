@@ -8,20 +8,20 @@ import memo.ui.Ui;
 
 public class TagCmd extends Command {
     private int index;
-    private String tag;
+    private String newTag;
 
     public TagCmd(int index, String tag) {
         this.index = index;
-        this.tag = tag;
+        this.newTag = tag;
     }
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws MemoException {
         tasks.validateIndex(index);
         Task task = tasks.getTask(index);
-        task.addTag(tag);
+        task.addTag(newTag);
 
-        storage.save(tasks); // 存盘
-        return ui.showTagged(task); // 通知UI显示
+        storage.save(tasks);
+        return ui.showTagged(task);
     }
 }

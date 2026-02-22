@@ -8,11 +8,13 @@ public class ToDo extends Task {
 
     @Override
     public String toString() {
-        return String.format("[T]%s", super.toString());
+        return String.format("[T]%s %s", super.toString(),
+                super.getTagsString()).trim();
     }
 
     @Override
     public String toStoreForm() {
-        return String.format("T | %s | %s", super.toStoreForm(), String.join(",", tags));
+        return String.format("T | %s | %s", super.toStoreForm(),
+                String.join(",", tags));
     }
 }
