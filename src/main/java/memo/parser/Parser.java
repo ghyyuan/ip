@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Parses user input and file content into executable commands and task objects.
  */
+
 public class Parser {
 
     private static final String DELIMITER = " \\| ";
@@ -61,7 +62,7 @@ public class Parser {
         assert fullCmd != null : "Command string should not be null";
 
         if (fullCmd.contains("|")) {
-            throw new MemoException("Please don't use the pipe character '|' in your input! ><");
+            throw new MemoException("Please don't use the pipe character '|' in input! ><");
         }
         String[] inputs = fullCmd.split(" ", 2);
 
@@ -95,6 +96,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepares an {@code AddTodoCmd} by extracting inline tags and the task description
+     * from the provided arguments.
+     *
+     * @param args The arguments string provided by the user for a todo task.
+     * @return An {@code AddTodoCmd} ready for execution.
+     * @throws MemoException If tag extraction or command creation fails.
+     */
     private static Command prepareTodo(String args) throws MemoException {
         ParsedInput parsed = extractTags(args);
         AddTodoCmd cmd = new AddTodoCmd(parsed.cleanText());
@@ -102,17 +111,33 @@ public class Parser {
         return cmd;
     }
 
+    /**
+     * Prepares an {@code AddDeadlineCmd} by extracting inline tags and parsing the
+     * description and deadline time separated by the "/by" keyword.
+     *
+     * @param args The arguments string provided by the user for a deadline task.
+     * @return An {@code AddDeadlineCmd} ready for execution.
+     * @throws MemoException If the "/by" keyword is missing or if description/time is empty.
+     */
     private static Command prepareDeadline(String args) throws MemoException {
         ParsedInput parsed = extractTags(args);
         String[] parts = parsed.cleanText().split(ARG_BY);
         if (parts.length < 2) {
-            throw new MemoException("Please specify the deadline with content and '/by' :(");
+            throw new MemoException("Please specify the deadline with content + '/by' + time :(");
         }
         AddDeadlineCmd cmd = new AddDeadlineCmd(parts[0], parts[1]);
         cmd.setTags(parsed.tags());
         return cmd;
     }
 
+    /**
+     * Prepares an {@code AddEventCmd} by extracting inline tags and parsing the
+     * description, start time, and end time separated by "/from" and "/to" keywords.
+     *
+     * @param args The arguments string provided by the user for an event task.
+     * @return An {@code AddEventCmd} ready for execution.
+     * @throws MemoException If keywords are missing or if any required fields are empty.
+     */
     private static Command prepareEvent(String args) throws MemoException {
         ParsedInput parsed = extractTags(args);
         String[] fromParts = parsed.cleanText().split(ARG_FROM);
@@ -128,10 +153,17 @@ public class Parser {
         return cmd;
     }
 
+    /**
+     * Prepares a {@code TagCmd} to add a tag to an existing task based on its index.
+     *
+     * @param args The arguments string containing the task index and the tag name.
+     * @return A {@code TagCmd} ready for execution.
+     * @throws MemoException If the input format is invalid or the tag name is empty.
+     */
     private static Command prepareTag(String args) throws MemoException {
         String[] parts = args.split(" ", 2);
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new MemoException("Please specify the task number and the tag! (e.g., tag 1 fun) ><");
+            throw new MemoException("Please specify the task number and the tag! (e.g., tag 1 2103T) ^V^");
         }
         return new TagCmd(Integer.parseInt(parts[0]) - 1, parts[1].trim());
     }
@@ -159,15 +191,21 @@ public class Parser {
         }
     }
 
+    /**
+     * Extracts inline tags (words starting with '#') from the raw input string and
+     * separates them from the remaining text content.
+     *
+     * @param rawInput The raw input string containing potential inline tags.
+     * @return A {@code ParsedInput} record containing the cleaned text and a list of tags.
+     * @throws MemoException If a tag is found to be empty (e.g., a lone '#').
+     */
     private static ParsedInput extractTags(String rawInput) throws MemoException {
         List<String> tags = new ArrayList<>();
         StringBuilder cleanedInput = new StringBuilder();
 
-        // 用 " +" 切分：不管打多少个空格，都当成一个空格处理，消灭幽灵空格
         String[] words = rawInput.split(" +");
         for (String word : words) {
             if (word.startsWith("#")) {
-                // 抓到了！如果只有一个 '#'，说明没写标签内容
                 if (word.length() == 1) {
                     throw new MemoException("Tag name cannot be empty! Please specify a tag after '#' ><");
                 }

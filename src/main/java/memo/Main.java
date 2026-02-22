@@ -12,6 +12,7 @@ import memo.ui.MainWindow;
 /**
  * A GUI for Memo using FXML.
  */
+
 public class Main extends Application {
 
     private Memo memo = new Memo("data/text.txt");
@@ -23,6 +24,8 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setTitle("Memo");
+            stage.setResizable(false);
             fxmlLoader.<MainWindow>getController().setMemo(memo);  // inject the Memo instance
             stage.show();
         } catch (IOException e) {

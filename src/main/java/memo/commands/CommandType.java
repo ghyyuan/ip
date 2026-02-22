@@ -9,7 +9,7 @@ public enum CommandType {
      * and safely returns the UNKNOWN command type.
      *
      * @param s The command string to be parsed (e.g., "todo", "list").
-     * @return The corresponding CommandType, or CommandType.UNKNOWN if the input is invalid.
+     * @return The corresponding CommandType, or CommandType. UNKNOWN if the input is invalid.
      */
     public static CommandType fromString(String s) {
         try {

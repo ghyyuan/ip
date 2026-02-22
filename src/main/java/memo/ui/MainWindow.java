@@ -15,6 +15,7 @@ import memo.Memo;
 /**
  * Controller for the main GUI.
  */
+
 public class MainWindow extends AnchorPane {
     @FXML
     private ScrollPane scrollPane;

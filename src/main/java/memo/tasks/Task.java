@@ -20,12 +20,26 @@ public class Task  {
         this.tags = new ArrayList<>();
     }
 
+    /**
+     * Adds a specified tag to the task.
+     * This method assumes the input tag has been pre-validated by the parser to be a
+     * non-empty string.
+     * It prevents duplicate tags and the injection of illegal storage characters.
+     *
+     * @param tag The tag string to be added.
+     * @throws MemoException If the tag already exists, or contains illegal characters
+     * (e.g., commas) that could corrupt the storage file structure.
+     */
     public void addTag(String tag) throws MemoException {
+        assert tag != null && !tag.trim().isEmpty() : "Tag passed to Task should not be null or empty";
+
         if (this.tags.contains(tag)) {
-            throw new MemoException("Tag " + tag + " already exists QaQ");
-        } else if (tag.trim().isEmpty()) {
-            throw new MemoException("Tag should not be empty QaQ");
+            throw new MemoException("Tag #" + tag + " already exists QaQ");
         }
+        if (tag.contains(",")) {
+            throw new MemoException("Tags cannot contain commas (,) QaQ");
+        }
+
         this.tags.add(tag);
     }
 
