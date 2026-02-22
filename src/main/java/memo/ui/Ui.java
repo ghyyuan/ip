@@ -14,7 +14,7 @@ public class Ui {
      * @return The welcome message string.
      */
     public String showWelcome() {
-        return "Hello! I'm Memo\nWhat can I do for you? :P";
+        return "Hello! I'm Memo\nWhat can I do for you?\nType 'help' to learn more :P";
     }
 
     public String showBye() {
@@ -31,7 +31,7 @@ public class Ui {
     public String showAddedTask(Task task, int total) {
         assert task != null : "Task to be shown should not be null";
         assert total > 0 : "Total tasks should be strictly positive after adding";
-        return String.format("Got it. I've added this task:\n%s\nNow you have %d tasks in the list",
+        return String.format("Got it! I've added this task:\n%s\nNow you have %d tasks in the list",
                 task, total);
     }
 
@@ -124,6 +124,7 @@ public class Ui {
                 + "7. find <keyword> - Search in your list\n"
                 + "8. tag <index> <tagname> - Add a tag\n"
                 + "9. help - Show this guide\n"
-                + "10. bye - See you again\n";
+                + "10. bye - See you again\n"
+                + "e.g. event dining out /from 2022-01-01 /to 2022-01-02 #family\n";
     }
 }
