@@ -1,26 +1,120 @@
-# memo.Memo project template
+# Memo User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Memo is a lightweight, personality-driven task management chatbot designed to help you track your daily tasks, deadlines, and events through a simple command-line interface. 
+With its intuitive GUI, staying organized has never been more delightful.
 
-## Setting up in Intellij
+## Quick Start
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+Ensure you have JDK 17 installed on your computer.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/memo.Memo.java` file, right-click it, and choose `Run memo.Memo.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+Download the latest version [here](https://github.com/ghyyuan/ip/releases/)
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+Run the application with `java -jar Memo.jar`
+
+Type your command into the input box and press Enter to execute.
+
+## Features
+
+1. <ins>Task Management
+
+   - **todo**
+   
+        Creates a basic task without any specific time constraint. You can add inline tags using the # symbol.
+
+        Format: `todo <description> [#tag]`
+
+        Example: `todo Read CS2103T topic #school`
+
+   - **deadline**
+
+        Creates a task with a specific due date.
+
+        Format: `deadline <description> /by <yyyy-mm-dd> [#tag]`
+
+        Example: `deadline Submit iP /by 2026-02-20 #urgent`
+
+   - **event**
+
+        Creates a task with a start and end date.
+
+        Format: `event <description> /from <yyyy-mm-dd> /to <yyyy-mm-dd> [#tag]`
+
+        Example: `event Team Meeting /from 2026-02-21 /to 2026-02-21 #project`
+
+2. <ins>List and Status Management
+
+   - **list**
+    
+        Displays all tasks currently in your list, including their completion status and tags.
+
+        Format: `list`
+
+   - **mark / unmark**
+
+        Updates the completion status of a task using its index in the list.
+
+        Format: `mark <index> or unmark <index>`
+
+        Example: `mark 1`
+
+   - **delete**
+
+        Removes a specific task from your list.
+
+        Format: `delete <index>`
+
+        Example: `delete 2`
+
+3. <ins>Organization and Search
+
+   - **find**
+   
+        Searches for tasks whose descriptions contain the given keyword.
+
+        Format: `find <keyword>`
+
+        Example: `find school`
+
+   - **tag**
+
+        Appends a new tag to an existing task by its index.
+
+        Format: `tag <index> <tagname>`
+
+        Example: `tag 1 fun`
+
+4. <ins>System Commands
+
+   - **help**
+   
+        Displays a quick reference guide of all available commands.
+
+        Format: `help`
+
+   - **bye**
+
+        Saves all changes to your local file and closes the application.
+
+        Format: `bye`
+
+## Usage Notes
+
+### Prohibited Characters: 
+For data integrity, the pipe character | and the comma , are forbidden in task descriptions and tag names. Using them will trigger an error.
+
+### Tag Formatting:
+Inline tags must start with a # followed immediately by content (e.g., #work is valid, while only # is not).
+
+### Auto-Save: 
+Memo automatically saves all your updates to data/text.txt. Your data is reloaded every time you launch the app.
+
+## FAQ
+**Q: Why does deadline /by 2026-01-01 result in an error?**
+
+A: Every task requires a description. Use the format deadline [content] /by 2026-01-01.
+
+**Q: Can I add multiple tags at once?**
+
+A: Yes! When creating a task, you can include multiple # tags, such as todo workout #fitness #gym.
+
+Enjoy staying organized with Memo! If you ever get stuck, just type `help`.
