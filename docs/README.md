@@ -1,6 +1,6 @@
 # Memo User Guide
 
-// Product screenshot goes here
+![screenshot of GUI](../docs/Ui.png)
 
 Memo is a lightweight, personality-driven task management chatbot designed to help you track your daily tasks, deadlines, and events through a simple command-line interface. 
 With its intuitive GUI, staying organized has never been more delightful.
@@ -9,15 +9,17 @@ With its intuitive GUI, staying organized has never been more delightful.
 
 Ensure you have JDK 17 installed on your computer.
 
+Download the latest version [here](https://github.com/ghyyuan/ip/releases/)
+
 Run the application with `java -jar Memo.jar`
 
 Type your command into the input box and press Enter to execute.
 
 ## Features
 
-1. *Task Management*
+1. <ins>Task Management
 
-   - todo
+   - **todo**
    
         Creates a basic task without any specific time constraint. You can add inline tags using the # symbol.
 
@@ -25,7 +27,7 @@ Type your command into the input box and press Enter to execute.
 
         Example: `todo Read CS2103T topic #school`
 
-   - deadline
+   - **deadline**
 
         Creates a task with a specific due date.
 
@@ -33,7 +35,7 @@ Type your command into the input box and press Enter to execute.
 
         Example: `deadline Submit iP /by 2026-02-20 #urgent`
 
-   - event
+   - **event**
 
         Creates a task with a start and end date.
 
@@ -41,15 +43,15 @@ Type your command into the input box and press Enter to execute.
 
         Example: `event Team Meeting /from 2026-02-21 /to 2026-02-21 #project`
 
-2. *List and Status Management*
+2. <ins>List and Status Management
 
-   - list
+   - **list**
     
         Displays all tasks currently in your list, including their completion status and tags.
 
         Format: `list`
 
-   - mark / unmark
+   - **mark / unmark**
 
         Updates the completion status of a task using its index in the list.
 
@@ -57,7 +59,7 @@ Type your command into the input box and press Enter to execute.
 
         Example: `mark 1`
 
-   - delete
+   - **delete**
 
         Removes a specific task from your list.
 
@@ -65,9 +67,9 @@ Type your command into the input box and press Enter to execute.
 
         Example: `delete 2`
 
-3. *Organization and Search*
+3. <ins>Organization and Search
 
-   - find
+   - **find**
    
         Searches for tasks whose descriptions contain the given keyword.
 
@@ -75,7 +77,7 @@ Type your command into the input box and press Enter to execute.
 
         Example: `find school`
 
-   - tag
+   - **tag**
 
         Appends a new tag to an existing task by its index.
 
@@ -83,15 +85,15 @@ Type your command into the input box and press Enter to execute.
 
         Example: `tag 1 fun`
 
-4. System Commands
+4. <ins>System Commands
 
-   - help
+   - **help**
    
         Displays a quick reference guide of all available commands.
 
         Format: `help`
 
-   - bye
+   - **bye**
 
         Saves all changes to your local file and closes the application.
 
@@ -99,20 +101,20 @@ Type your command into the input box and press Enter to execute.
 
 ## Usage Notes
 
-# Prohibited Characters: 
+### Prohibited Characters: 
 For data integrity, the pipe character | and the comma , are forbidden in task descriptions and tag names. Using them will trigger an error.
 
-# Tag Formatting:
+### Tag Formatting:
 Inline tags must start with a # followed immediately by content (e.g., #work is valid, while only # is not).
 
-# Auto-Save: 
+### Auto-Save: 
 Memo automatically saves all your updates to data/text.txt. Your data is reloaded every time you launch the app.
 
 ## FAQ
-# Q: Why does deadline /by 2026-01-01 result in an error? 
+**Q: Why does deadline /by 2026-01-01 result in an error?**
 A: Every task requires a description. Use the format deadline [content] /by 2026-01-01.
 
-# Q: Can I add multiple tags at once? 
+**Q: Can I add multiple tags at once?**
 A: Yes! When creating a task, you can include multiple # tags, such as todo workout #fitness #gym.
 
-Enjoy staying organized with Memo! If you ever get stuck, just type help.
+Enjoy staying organized with Memo! If you ever get stuck, just type `help`.
