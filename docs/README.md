@@ -1,6 +1,6 @@
 # Memo User Guide
 
-![screenshot of GUI](../docs/Ui.png)
+![screenshot of GUI](Ui.png)
 
 Memo is a lightweight, personality-driven task management chatbot designed to help you track your daily tasks, deadlines, and events through a simple command-line interface. 
 With its intuitive GUI, staying organized has never been more delightful.
@@ -112,9 +112,11 @@ Memo automatically saves all your updates to data/text.txt. Your data is reloade
 
 ## FAQ
 **Q: Why does deadline /by 2026-01-01 result in an error?**
+
 A: Every task requires a description. Use the format deadline [content] /by 2026-01-01.
 
 **Q: Can I add multiple tags at once?**
+
 A: Yes! When creating a task, you can include multiple # tags, such as todo workout #fitness #gym.
 
 Enjoy staying organized with Memo! If you ever get stuck, just type `help`.
