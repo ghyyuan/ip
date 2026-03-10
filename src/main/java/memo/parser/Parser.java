@@ -1,6 +1,17 @@
 package memo.parser;
 
-import memo.commands.*;
+import memo.commands.AddDeadlineCmd;
+import memo.commands.AddEventCmd;
+import memo.commands.AddTodoCmd;
+import memo.commands.ChangeStatusCmd;
+import memo.commands.Command;
+import memo.commands.CommandType;
+import memo.commands.DeleteCmd;
+import memo.commands.ExitCmd;
+import memo.commands.FindCmd;
+import memo.commands.HelpCmd;
+import memo.commands.ListCmd;
+import memo.commands.TagCmd;
 import memo.exceptions.MemoException;
 import memo.tasks.Deadline;
 import memo.tasks.Event;
